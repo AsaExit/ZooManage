@@ -7,7 +7,7 @@ namespace ZooManage.Data
     {
         public ZooManageDbContext(DbContextOptions<ZooManageDbContext> options) : base(options) { }
         public DbSet<Animal>? Animals { get; set; }
-        public DbSet<Veterinary>? Veters { get; set; }
+        public DbSet<Veterinary>? Veterinaries { get; set; }
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
         //{
         //    base.OnModelCreating(modelBuilder);

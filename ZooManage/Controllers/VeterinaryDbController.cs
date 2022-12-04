@@ -14,7 +14,7 @@ namespace ZooManage.Controllers
 
         public IActionResult Index()
         {
-            return View(_zooManage.Veters.ToList());
+            return View(_zooManage.Veterinaries.ToList());
         }
         [HttpGet]
         public IActionResult Create()
@@ -28,7 +28,7 @@ namespace ZooManage.Controllers
             if (ModelState.IsValid)
             {
                 veterinary.Id = veterinary.Id;
-                _zooManage.Veters.Add(veterinary);
+                _zooManage.Veterinaries.Add(veterinary);
                 _zooManage.SaveChanges();
             }
             return RedirectToAction("index");

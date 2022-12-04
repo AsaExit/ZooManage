@@ -11,8 +11,8 @@ using ZooManage.Data;
 namespace ZooManage.Migrations
 {
     [DbContext(typeof(ZooManageDbContext))]
-    [Migration("20221204201028_ClassVeterinary")]
-    partial class ClassVeterinary
+    [Migration("20221204202559_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -22,6 +22,21 @@ namespace ZooManage.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("AnimalVeterinary", b =>
+                {
+                    b.Property<int>("AnimalsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VeterinariesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AnimalsId", "VeterinariesId");
+
+                    b.HasIndex("VeterinariesId");
+
+                    b.ToTable("AnimalVeterinary");
+                });
 
             modelBuilder.Entity("ZooManage.Models.Animal", b =>
                 {
@@ -54,16 +69,29 @@ namespace ZooManage.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("VetId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Veters");
+                    b.ToTable("Veterinaries");
+                });
+
+            modelBuilder.Entity("AnimalVeterinary", b =>
+                {
+                    b.HasOne("ZooManage.Models.Animal", null)
+                        .WithMany()
+                        .HasForeignKey("AnimalsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ZooManage.Models.Veterinary", null)
+                        .WithMany()
+                        .HasForeignKey("VeterinariesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
